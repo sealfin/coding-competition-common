@@ -29,7 +29,14 @@ t_UnsignedLong;
 #define t_UnsignedLong_printf_Typecast t_UnsignedLong
 #endif
 
-/* If your code invokes the `malloc_WithErrorChecking()`, `realloc_WithErrorChecking()`, or/and `f_ReadStringFromFile()` function(s), the following procedure must be implemented. */
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+void p_WriteUnsignedLongToFile( FILE * const p_file, const t_UnsignedLong p_unsignedLong );
+
+/* If your code invokes the `?_malloc_WithErrorChecking()` or/and `?_realloc_WithErrorChecking()` function(s) or/and macro(s), or/and the `f_ReadStringFromFile()` function, the following procedure must be implemented. */
 void p_Exit( const int p );
 
 void *f_malloc_WithErrorChecking( const size_t p_sizeInBytes, const char * const p_nameOfPointer, const char * const p_nameOfFile, const unsigned int p_lineInFile );
@@ -44,6 +51,10 @@ void *f_realloc_WithErrorChecking( void *p_originalMemory, const size_t p_sizeIn
 
 char *f_ReadStringFromFile( FILE * const p_file, const char * const p_mayBeTerminatedBy, char * const p_terminatedBy, bool * const p_endOfFileEncountered );
 
+#ifdef __cplusplus
+}
+#endif
+
 typedef enum
 {
   k_StringToUnsignedIntError_None,
@@ -55,6 +66,43 @@ typedef enum
 }
 t_StringToUnsignedIntError;
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 t_StringToUnsignedIntError f_StringToUnsignedInt( const char * const p_string, unsigned int * const p_unsignedInt );
+
+bool f_AdditionWillOverflow( const t_UnsignedLong p_a, const t_UnsignedLong p_b, const size_t p_numberOfBits );
+
+#define M_AdditionWillOverflow( p_a, p_b )                         \
+  f_AdditionWillOverflow( p_a, p_b, sizeof( t_UnsignedLong ) * 8 )
+
+#ifdef __cplusplus
+}
+#endif
+
+typedef enum
+{
+  k_StringToUnsignedLongError_None,
+  k_StringToUnsignedLongError_p_string_Is_NULL,
+  k_StringToUnsignedLongError_p_string_IsZeroCharactersInLength,
+  k_StringToUnsignedLongError_multiplier_Overflowed,
+  k_StringToUnsignedLongError_value_to_assign_Overflowed,
+  k_StringToUnsignedLongError_value_Overflowed,
+  k_StringToUnsignedLongError_p_string_ContainsANonDigitCharacter
+}
+t_StringToUnsignedLongError;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+t_StringToUnsignedLongError f_StringToUnsignedLong( const char * const p_string, t_UnsignedLong * const p_unsignedLong );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
