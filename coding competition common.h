@@ -79,8 +79,10 @@ t_Substrings;
 
 typedef enum
 {
-  k_SplitStringDecision_RetainCharacter, // and add it to the sub-string.
+  k_SplitStringDecision_BeginNewSubstringWithCharacter, // ending the old sub-string if necessary.
+  k_SplitStringDecision_RetainCharacter, // and add it to the sub-string (beginning a new sub-string if necessary).
   k_SplitStringDecision_DiscardCharacter, // but don't end the sub-string.
+  k_SplitStringDecision_RetainCharacterAndEndSubstring,
   k_SplitStringDecision_EndSubstring
 }
 t_SplitStringDecision;
