@@ -56,10 +56,24 @@ t_Substrings f_SplitString( const char * const p_string, const char * const p_na
 
       switch( p_function( c, p_functionData ))
       {
+        case k_SplitStringDecision_BeginNewSubstringWithCharacter:
+          if( substring != NULL ) {
+            substring = f_AddCharacterToSubstring( substring, &length_of_substring, '\0' );
+            p_AddSubstring( &substrings, substring );
+            substring = NULL;
+          }
+          substring = f_AddCharacterToSubstring( substring, &length_of_substring, c );
+          break;
         case k_SplitStringDecision_RetainCharacter:
           substring = f_AddCharacterToSubstring( substring, &length_of_substring, c );
           break;
         case k_SplitStringDecision_DiscardCharacter:
+          break;
+        case k_SplitStringDecision_RetainCharacterAndEndSubstring:
+          substring = f_AddCharacterToSubstring( substring, &length_of_substring, c );
+          substring = f_AddCharacterToSubstring( substring, &length_of_substring, '\0' );
+          p_AddSubstring( &substrings, substring );
+          substring = NULL;
           break;
         case k_SplitStringDecision_EndSubstring:
           if( substring != NULL )
