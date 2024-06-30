@@ -15,17 +15,26 @@ long
 #endif
 t_UnsignedLong;
 
+typedef signed long
+#ifndef LEONARDO
+long
+#endif
+t_SignedLong;
+
 #ifdef LEONARDO
+#define k_UnsignedLongMax ULONG_MAX
 #define k_UnsignedLong_printf_Format "%lu"
 #define t_UnsignedLong_printf_Typecast t_UnsignedLong
 #endif
 
 #ifdef __MWERKS__
+#define k_UnsignedLongMax ULONG_MAX
 #define k_UnsignedLong_printf_Format "%lu"
 #define t_UnsignedLong_printf_Typecast unsigned long
 #endif
 
 #if !( defined( LEONARDO ) || defined( __MWERKS__ ))
+#define k_UnsignedLongMax ULLONG_MAX
 #define k_UnsignedLong_printf_Format "%llu"
 #define t_UnsignedLong_printf_Typecast t_UnsignedLong
 #endif
